@@ -8,12 +8,8 @@
 import UIKit
 
 class EpisodeCharacterTableViewCell: UITableViewCell {
-    let character: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.systemFont(ofSize: 15.0)
-        l.text = "Characters"
-        return l
-    }()
+    
+    let character: UILabel = UILabel.label(text: "Characters", ofSize: 15.0)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

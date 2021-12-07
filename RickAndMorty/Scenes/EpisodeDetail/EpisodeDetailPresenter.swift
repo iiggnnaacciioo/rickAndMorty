@@ -8,13 +8,13 @@
 import Foundation
 
 protocol EpisodeDetailPresentationLogic {
-    func presentEpisodeDetails(episode: Episode)
+    func formatEpisodeDetails(episode: Episode)
 }
 
 final class EpisodeDetailPresenter: EpisodeDetailPresentationLogic {
     weak var viewController: EpisodeDetailDisplayLogic?
 
-    func presentEpisodeDetails(episode: Episode) {
+    func formatEpisodeDetails(episode: Episode) {
         let viewModel = EpisodeDetail.ViewModel.DisplayedEpisodeDetail(title: episode.name,
                                                                        airDate: episode.airDate,
                                                                        episode: episode.episode,

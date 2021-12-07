@@ -57,7 +57,7 @@ final class EpisodeDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.formatEpisodeDetail()
+        interactor?.sendEpisodeDetails()
     }
     
     override func viewDidLoad() {

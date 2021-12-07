@@ -31,6 +31,8 @@ final class ListEpisodesInteractor: ListEpisodesBusinessLogic, ListEpisodesDataS
             
             if let response = response {
                 self.presenter?.presentFetchedEpisodes(response: response)
+            } else {
+                self.presenter?.presentError()
             }
         }
     }

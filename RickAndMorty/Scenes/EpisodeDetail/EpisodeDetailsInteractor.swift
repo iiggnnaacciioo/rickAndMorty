@@ -8,7 +8,7 @@
 import Foundation
 
 protocol EpisodeDetailsBusinessLogic {
-  func formatEpisodeDetail()
+  func sendEpisodeDetails()
 }
 
 final class EpisodeDetailsInteractor: EpisodeDetailsBusinessLogic {
@@ -20,8 +20,8 @@ final class EpisodeDetailsInteractor: EpisodeDetailsBusinessLogic {
         self.episode = episode
     }
     
-    func formatEpisodeDetail() {
+    func sendEpisodeDetails() {
         guard let episode = episode else { return }
-        presenter?.presentEpisodeDetails(episode: episode)
+        presenter?.formatEpisodeDetails(episode: episode)
     }
 }

@@ -8,7 +8,8 @@
 import UIKit
 
 protocol ListEpisodesDisplayLogic: AnyObject {
-  func displayFetchedEpisodes(viewModel: ListEpisodes.FetchEpisodes.ViewModel)
+    func displayFetchedEpisodes(viewModel: ListEpisodes.FetchEpisodes.ViewModel)
+    func displayError()
 }
 
 final class ListEpisodesViewController: UIViewController {
@@ -61,6 +62,10 @@ final class ListEpisodesViewController: UIViewController {
         
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchEpisodes()
+    }
+    
+    private func fetchEpisodes() {
         self.title = "Episodes"
         interactor?.fetchEpisodes()
     }
@@ -70,6 +75,12 @@ extension ListEpisodesViewController: ListEpisodesDisplayLogic {
     func displayFetchedEpisodes(viewModel: ListEpisodes.FetchEpisodes.ViewModel) {
         displayedEpisodes = viewModel.displayedEpisodes
         table.reloadData()
+    }
+    
+    func displayError() {
+        UIAlertController.makeRetryAlert(title: "Error", message: "Couldn't fetch episodes", parent: self) { [weak self] in
+            self?.fetchEpisodes()
+        }
     }
 }
 

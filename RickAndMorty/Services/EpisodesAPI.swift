@@ -12,7 +12,8 @@ class EpisodesAPI: EpisodesStoreProtocol {
         guard let url = URL(string: "https://rickandmortyapi.com/api/episode") else { return }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
+            if error != nil {
+                completionHandler(nil, EpisodesStoreError.CannotFetch("Can't fetch data"))
                 return
             }
             
@@ -21,7 +22,7 @@ class EpisodesAPI: EpisodesStoreProtocol {
                 let json = try? JSONDecoder().decode(ListEpisodes.FetchEpisodes.Response.self, from: data)
                 completionHandler(json, nil)
             } else {
-                print("error")
+                completionHandler(nil, EpisodesStoreError.CannotFetch("Can't fetch data"))
             }
         }.resume()
     }

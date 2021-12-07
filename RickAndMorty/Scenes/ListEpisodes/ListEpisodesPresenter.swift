@@ -9,6 +9,7 @@ import Foundation
 
 protocol ListEpisodesPresentationLogic {
     func presentFetchedEpisodes(response: ListEpisodes.FetchEpisodes.Response)
+    func presentError()
 }
 
 final class ListEpisodesPresenter: ListEpisodesPresentationLogic {
@@ -22,5 +23,9 @@ final class ListEpisodesPresenter: ListEpisodesPresentationLogic {
         }
         let viewModel = ListEpisodes.FetchEpisodes.ViewModel(displayedEpisodes: displayedEpisodes)
         viewController?.displayFetchedEpisodes(viewModel: viewModel)
+    }
+    
+    func presentError() {
+        viewController?.displayError()
     }
 }

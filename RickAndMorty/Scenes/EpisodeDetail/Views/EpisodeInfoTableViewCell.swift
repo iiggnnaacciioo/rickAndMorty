@@ -16,40 +16,15 @@ class EpisodeInfoTableViewCell: UITableViewCell {
         return sv
     }()
     
-    let airDateTitle: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.boldSystemFont(ofSize: 15.0)
-        l.text = "Air Date"
-        return l
-    }()
-    
-    let airDate: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.systemFont(ofSize: 15.0)
-        l.text = "-"
-        return l
-    }()
+    let airDateTitle: UILabel = UILabel.boldLabel(text: "AirDate", ofSize: 15.0)
 
-    let episodeTitle: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.boldSystemFont(ofSize: 15.0)
-        l.text = "Episode"
-        return l
-    }()
-    
-    let episode: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.systemFont(ofSize: 15.0)
-        l.text = "-"
-        return l
-    }()
+    let airDate: UILabel = UILabel.label(text: "-", ofSize: 15.0)
 
-    let charactersTitle: UILabel = {
-        let l = UILabel()
-        l.font = UIFont.boldSystemFont(ofSize: 15.0)
-        l.text = "Characters"
-        return l
-    }()
+    let episodeTitle: UILabel = UILabel.boldLabel(text: "Episode", ofSize: 15.0)
+    
+    let episode: UILabel = UILabel.label(text: "-", ofSize: 15.0)
+
+    let charactersTitle: UILabel = UILabel.boldLabel(text: "Characters", ofSize: 15.0)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
