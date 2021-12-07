@@ -18,6 +18,7 @@ final class EpisodeDetailViewController: UIViewController {
     
     private var table: UITableView = {
         var t = UITableView()
+        t.separatorStyle = .none
         return t
     }()
 
@@ -40,7 +41,8 @@ final class EpisodeDetailViewController: UIViewController {
         table.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         table.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "EpisodeDetailTableViewCell")
+        table.register(EpisodeCharacterTableViewCell.self, forCellReuseIdentifier: "EpisodeCharacterTableViewCell")
+        table.register(EpisodeInfoTableViewCell.self, forCellReuseIdentifier: "EpisodeInfoTableViewCell")
         table.dataSource = self
     }
     
@@ -66,7 +68,6 @@ final class EpisodeDetailViewController: UIViewController {
 extension EpisodeDetailViewController: EpisodeDetailDisplayLogic {
     func displayEpisodeDetail(viewModel: EpisodeDetail.ViewModel.DisplayedEpisodeDetail) {
         displayedEpisodeDetail = viewModel
-        print("eraser me displayEpisodeDetail: ", viewModel)
         table.reloadData()
     }
 }
@@ -81,19 +82,20 @@ extension EpisodeDetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2 + (displayedEpisodeDetail?.characters.count ?? 0)
+        1 + (displayedEpisodeDetail?.characters.count ?? 0)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "EpisodeDetailTableViewCell", for: indexPath)
         let row = indexPath.row
         if row == 0 {
-            cell.textLabel?.text = displayedEpisodeDetail?.airDate
-        } else if row == 1 {
-            cell.textLabel?.text = displayedEpisodeDetail?.episode
+            let episodeInfoCell = tableView.dequeueReusableCell(withIdentifier: "EpisodeInfoTableViewCell", for: indexPath) as? EpisodeInfoTableViewCell
+            episodeInfoCell?.configure(airDate: displayedEpisodeDetail?.airDate, episode: displayedEpisodeDetail?.episode)
+            return episodeInfoCell ?? UITableViewCell()
         } else {
-            cell.textLabel?.text = displayedEpisodeDetail?.characters[indexPath.row - 2]
+            let characterCell = tableView.dequeueReusableCell(withIdentifier: "EpisodeCharacterTableViewCell", for: indexPath) as? EpisodeCharacterTableViewCell
+            characterCell?.configure(character: displayedEpisodeDetail?.characters[indexPath.row - 1])
+            return characterCell ?? UITableViewCell()
         }
-        return cell
     }
 }
+

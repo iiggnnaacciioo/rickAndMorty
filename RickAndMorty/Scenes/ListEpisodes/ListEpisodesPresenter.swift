@@ -11,7 +11,7 @@ protocol ListEpisodesPresentationLogic {
     func presentFetchedEpisodes(response: ListEpisodes.FetchEpisodes.Response)
 }
 
-class ListEpisodesPresenter: ListEpisodesPresentationLogic {
+final class ListEpisodesPresenter: ListEpisodesPresentationLogic {
     weak var viewController: ListEpisodesDisplayLogic?
 
     func presentFetchedEpisodes(response: ListEpisodes.FetchEpisodes.Response) {

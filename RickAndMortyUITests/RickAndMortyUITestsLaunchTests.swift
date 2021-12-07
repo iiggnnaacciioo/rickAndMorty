@@ -16,7 +16,7 @@ class RickAndMortyUITestsLaunchTests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
-
+/*
     func testLaunch() throws {
         let app = XCUIApplication()
         app.launch()
@@ -28,5 +28,5 @@ class RickAndMortyUITestsLaunchTests: XCTestCase {
         attachment.name = "Launch Screen"
         attachment.lifetime = .keepAlways
         add(attachment)
-    }
+    }*/
 }

@@ -19,15 +19,47 @@ class RickAndMortyTests: XCTestCase {
     }
 
     func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+        let expectation = self.expectation(description: "Interactor sends response")
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+        let interactor = ListEpisodesInteractor(episodesWorker: EpisodesWorker(episodesStore: EpisodesMockAPI()))
+        let presenter = ListEpisodesPresenterSpy()
+        interactor.presenter = presenter
+        interactor.fetchEpisodes()
+        
+        presenter.completion =  {
+            expectation.fulfill()
+            XCTAssertEqual(presenter.response?.results.count, 20)
+        }
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("wait for expectations failed with error \(error)")
+            }
         }
     }
+}
 
+class ListEpisodesPresenterSpy: ListEpisodesPresentationLogic {
+    var response: ListEpisodes.FetchEpisodes.Response?
+    var completion: (()->())?
+    
+    func presentFetchedEpisodes(response: ListEpisodes.FetchEpisodes.Response) {
+        self.response = response
+        completion?()
+    }
+}
+
+class EpisodesMockAPI: EpisodesStoreProtocol {
+    func fetchEpisodes(completionHandler: @escaping (ListEpisodes.FetchEpisodes.Response?, EpisodesStoreError?) -> Void) {
+        let data = getData(name: "ListEpisodes", withExtension: "json")
+        let json = try? JSONDecoder().decode(ListEpisodes.FetchEpisodes.Response.self, from: data)
+        completionHandler(json, nil)
+    }
+    
+    func getData(name: String, withExtension: String = "json") -> Data {
+        let bundle = Bundle(for: type(of: self))
+        let fileUrl = bundle.url(forResource: name, withExtension: withExtension)
+        let data = try! Data(contentsOf: fileUrl!)
+        return data
+    }
 }

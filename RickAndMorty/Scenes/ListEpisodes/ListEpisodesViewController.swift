@@ -44,7 +44,7 @@ final class ListEpisodesViewController: UIViewController {
     
     private func setup() {
         let viewController = self
-        let interactor = ListEpisodesInteractor()
+        let interactor = ListEpisodesInteractor(episodesWorker: EpisodesWorker(episodesStore: EpisodesAPI()))
         let presenter = ListEpisodesPresenter()
         let router = ListEpisodesRouter()
         viewController.interactor = interactor

@@ -15,7 +15,7 @@ protocol ListEpisodesDataPassing {
   var dataStore: ListEpisodesDataStore? { get }
 }
 
-class ListEpisodesRouter: NSObject, ListEpisodesRoutingLogic, ListEpisodesDataPassing {
+final class ListEpisodesRouter: NSObject, ListEpisodesRoutingLogic, ListEpisodesDataPassing {
     var dataStore: ListEpisodesDataStore?
     weak var viewController: ListEpisodesViewController?
 

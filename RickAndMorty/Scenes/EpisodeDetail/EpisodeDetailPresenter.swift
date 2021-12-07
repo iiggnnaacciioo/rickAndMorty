@@ -11,20 +11,22 @@ protocol EpisodeDetailPresentationLogic {
     func presentEpisodeDetails(episode: Episode)
 }
 
-class EpisodeDetailPresenter: EpisodeDetailPresentationLogic {
+final class EpisodeDetailPresenter: EpisodeDetailPresentationLogic {
     weak var viewController: EpisodeDetailDisplayLogic?
 
     func presentEpisodeDetails(episode: Episode) {
-        /*var displayedEpisodes: [ListEpisodes.FetchEpisodes.ViewModel.DisplayedEpisode] = []
-        for episode in response.results {
-            let displayedEpisode = ListEpisodes.FetchEpisodes.ViewModel.DisplayedEpisode(title: episode.name)
-            displayedEpisodes.append(displayedEpisode)
-        }*/
         let viewModel = EpisodeDetail.ViewModel.DisplayedEpisodeDetail(title: episode.name,
                                                                        airDate: episode.airDate,
                                                                        episode: episode.episode,
-                                                                       characters: episode.characters)
-        print("eraser me episode: ", episode)
+                                                                       characters: formatEpisodeCharacter(episode.characters))
         viewController?.displayEpisodeDetail(viewModel: viewModel)
+    }
+    
+    private func formatEpisodeCharacter(_ episodeCharacters: [String]) -> [String] {
+        let formattedCharacters: [String] = episodeCharacters.compactMap {
+            let array = $0.components(separatedBy: "/")
+            return "Character " + (array.last ?? "")
+        }
+        return formattedCharacters
     }
 }
